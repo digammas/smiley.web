@@ -22,6 +22,7 @@ public class HelloServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().println("<html><head><title>Hello Page</title></head><body>");
 		response.getWriter().println("<p>Hello <b>Smiley</b> World ☺</p>");
+		response.getWriter().println("<a href='index.html'>Back to home page</a>");
 		response.getWriter().println("</body></html>");
 	}
 
