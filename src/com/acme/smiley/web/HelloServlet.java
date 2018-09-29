@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(description = "Greeting Servlet", urlPatterns = { "/hello" })
 public class HelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		this.doGet(request, response);
+	}
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
