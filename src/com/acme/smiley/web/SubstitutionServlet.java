@@ -20,8 +20,6 @@ public class SubstitutionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		PrintWriter out = response.getWriter();
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
 		out.println("<html><head><title>Substitution Service</title></head><body>");
 		out.println("<form action='#' method='POST'>");
 		out.println("<p>Please enter a message.</p>");
@@ -35,8 +33,6 @@ public class SubstitutionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
 		String message = request.getParameter("msg");
 		message = message.replace(":)", "☺");
 		PrintWriter out = response.getWriter();

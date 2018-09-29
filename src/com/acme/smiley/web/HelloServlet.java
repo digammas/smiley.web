@@ -23,8 +23,6 @@ public class HelloServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String name = request.getParameter("nm");
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
 		response.getWriter().println("<html><head><title>Hello Page</title><head><body>");
 		response.getWriter().printf("<p>Hello <b>Smiley</b> %s ☺</p>\n", name);
 		response.getWriter().println("<a href='substitution'>Substitution service</a><br/>");
