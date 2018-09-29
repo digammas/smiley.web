@@ -18,7 +18,9 @@ public class HelloServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.getWriter().println("Hello Smiley World :)");
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().println("Hello Smiley World ☺");
 	}
 
 }
