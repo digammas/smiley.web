@@ -1,7 +1,6 @@
-<%@page import="com.acme.smiley.model.Smiley"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,16 +10,9 @@
 <body>
 
 <table><tr><th>Smiley</th><th>Shortcut</th></tr>
-<%
-List<Smiley> list = (List<Smiley>) request.getAttribute("list");
-if (list != null) {
-	for (Smiley smiley : list) {
-	%> 
-	<tr><td><%= smiley.getFace() %></td><td><%= smiley.getShortcut() %></td></tr>
-	<%
-	}
-}
-%>
+<c:forEach items="${list}" var="smiley">
+	<tr><td>${smiley.face}</td><td>${smiley.shortcut}</td></tr>
+</c:forEach>
 </table>
 <a href='hello'>Go to welcome page</a><br/>
 </body>
