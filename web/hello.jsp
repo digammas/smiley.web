@@ -9,14 +9,12 @@
 <body>
 <%
 String name = request.getParameter("nm");
-if (name == null) {
-	name = (String) session.getAttribute("user");
-} else {
+if (name != null) {
 	session.setAttribute("user", name);
 }
 %>
 
-<p>Hello <b>Smiley</b> <%= name %> ☺</p>
+<p>Hello <b>Smiley</b> ${user} ☺</p>
 <a href='substitution.jsp'>Substitution service</a><br/>
 <a href='index.html'>Back to home page</a>
 
