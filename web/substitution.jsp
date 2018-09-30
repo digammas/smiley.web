@@ -17,7 +17,7 @@
 	<p>You entered the following message.</p>
 	<p><%= message %></p>
 	<a href=''>Try again</a><br/>
-	<a href='hello.jsp'>Go to welcome page</a><br/>
+	<a href='hello'>Go to welcome page</a><br/>
 <% } else { %>
 	<form action='#' method='POST'>
 		<p>Please enter a message.</p>
