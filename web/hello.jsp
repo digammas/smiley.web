@@ -9,7 +9,7 @@
 <body>
 
 <p>Hello <b>Smiley</b> ${empty user ? "guest" : user} ☺</p>
-<a href='substitution.jsp'>Substitution service</a><br/>
+<a href='substitution'>Substitution service</a><br/>
 <a href='index.html'>Back to home page</a>
 
 </body>
