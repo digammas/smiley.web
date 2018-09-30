@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class HelloServlet
@@ -23,6 +24,12 @@ public class HelloServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String name = request.getParameter("nm");
+		HttpSession session = request.getSession();
+		if (name == null) {
+			name = (String) session.getAttribute("user");
+		} else {
+			session.setAttribute("user", name);
+		}
 		response.getWriter().println("<html><head><title>Hello Page</title><head><body>");
 		response.getWriter().printf("<p>Hello <b>Smiley</b> %s ☺</p>\n", name);
 		response.getWriter().println("<a href='substitution'>Substitution service</a><br/>");
