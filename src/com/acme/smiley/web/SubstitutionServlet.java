@@ -8,12 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.acme.smiley.service.SubstitutionService;
+
 /**
  * Servlet implementation class SubstitutionServlet
  */
 @WebServlet("/substitution")
 public class SubstitutionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private SubstitutionService service = new SubstitutionService();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +38,7 @@ public class SubstitutionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String message = request.getParameter("msg");
-		message = message.replace(":)", "☺");
+		message = service.substitute(message);
 		PrintWriter out = response.getWriter();
 		out.println("<html><head><title>Substitution Service</title></head><body>");
 		out.println("<p>You entered the following message.</p>");
