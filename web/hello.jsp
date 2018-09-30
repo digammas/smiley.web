@@ -16,7 +16,7 @@ if (name == null) {
 }
 %>
 
-<p>Hello <b>Smiley</b> <% out.print(name); %> ☺</p>
+<p>Hello <b>Smiley</b> <%= name %> ☺</p>
 <a href='substitution'>Substitution service</a><br/>
 <a href='index.html'>Back to home page</a>
 
