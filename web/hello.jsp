@@ -7,12 +7,6 @@
 <title>Hello Page</title>
 </head>
 <body>
-<%
-String name = request.getParameter("nm");
-if (name != null) {
-	session.setAttribute("user", name);
-}
-%>
 
 <p>Hello <b>Smiley</b> ${empty user ? "guest" : user} ☺</p>
 <a href='substitution.jsp'>Substitution service</a><br/>
