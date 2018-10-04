@@ -29,7 +29,17 @@ public class SmileyDao {
 	public List<Smiley> read() {
 		return objects;
 	}
-	
+
+	/**
+	 * Read a specific smiley defined by its ID.
+	 *
+	 * @param id	smiley's ID
+	 * @return		the requested smiley object
+	 */
+	public Smiley read(int id) {
+		return objects.stream().filter(x -> id == x.getId()).findAny().orElse(null);
+	}
+
 	private int nextId() {
 		return this.lastId++;
 	}
