@@ -39,6 +39,20 @@ public class SmileyDao {
 	public Smiley read(int id) {
 		return objects.stream().filter(x -> id == x.getId()).findAny().orElse(null);
 	}
+	
+	/**
+	 * Update an existing smiley identified by its ID.
+	 *
+	 * @param edited	the updating smiley, it has the same ID as the smiley to be updated
+	 * @return			the newly updated smiley if a smiley with the same ID is found, null otherwise
+	 */
+	public Smiley update(Smiley edited) {
+		if (!objects.removeIf(x -> x.getId() == edited.getId())) {
+			return null;
+		}
+		objects.add(edited);
+		return edited;
+	}
 
 	private int nextId() {
 		return this.lastId++;

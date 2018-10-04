@@ -15,7 +15,8 @@
 		<td>${smiley.face}</td>
 		<td>${smiley.shortcut}</td>
 		<td>
-			<a href="smiley?id=${smiley.id}">view</a>
+			<a href="smiley?id=${smiley.id}">view</a> |
+			<a href="smiley?id=${smiley.id}&act=edit">edit</a>
 		</td>
 	</tr>
 </c:forEach>
