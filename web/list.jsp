@@ -9,9 +9,15 @@
 </head>
 <body>
 
-<table><tr><th>Smiley</th><th>Shortcut</th></tr>
+<table><tr><th>Smiley</th><th>Shortcut</th><th>Actions</th></tr>
 <c:forEach items="${list}" var="smiley">
-	<tr><td>${smiley.face}</td><td>${smiley.shortcut}</td></tr>
+	<tr>
+		<td>${smiley.face}</td>
+		<td>${smiley.shortcut}</td>
+		<td>
+			<a href="smiley?id=${smiley.id}">view</a>
+		</td>
+	</tr>
 </c:forEach>
 </table>
 <a href='hello'>Go to welcome page</a><br/>
