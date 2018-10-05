@@ -47,11 +47,33 @@ public class SmileyDao {
 	 * @return			the newly updated smiley if a smiley with the same ID is found, null otherwise
 	 */
 	public Smiley update(Smiley edited) {
-		if (!objects.removeIf(x -> x.getId() == edited.getId())) {
-			return null;
-		}
-		objects.add(edited);
-		return edited;
+		return delete(edited.getId()) ? add(edited) : null;
+	}
+
+	/**
+	 * Add new smiley to the list, assigning it a new ID.
+	 *
+	 * @param smiley	the new smiley object to be added
+	 * @return			the newly added smiley
+	 */
+	public Smiley create(Smiley smiley) {
+		smiley.setId(nextId());
+		return add(smiley);
+	}
+
+	/**
+	 * Delete a smiley identified by its ID.
+	 *
+	 * @param id	the smiley identifier
+	 * @return		true if smiley found and deleted, false otherwise
+	 */
+	public boolean delete(int id) {
+		return objects.removeIf(x -> x.getId() == id);
+	}
+
+	private Smiley add(Smiley smiley) {
+		objects.add(smiley);
+		return smiley;
 	}
 
 	private int nextId() {
