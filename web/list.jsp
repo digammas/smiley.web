@@ -16,11 +16,14 @@
 		<td>${smiley.shortcut}</td>
 		<td>
 			<a href="smiley?id=${smiley.id}">view</a> |
-			<a href="smiley?id=${smiley.id}&act=edit">edit</a>
+			<a href="smiley?id=${smiley.id}&act=edit">edit</a> |
+			<a href="smiley?id=${smiley.id}&act=delete">delete</a>
 		</td>
 	</tr>
 </c:forEach>
 </table>
+<a href="smiley?act=new">Create new smiley</a>
+<p/>
 <a href='hello'>Go to welcome page</a><br/>
 </body>
 </html>
