@@ -26,14 +26,21 @@ public class SmileyServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
 		String action = request.getParameter("act");
-		Smiley smiley = dao.read(Integer.parseInt(id));
-		if (smiley == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return;
+		if ("new".equals(action)) {
+			request.getRequestDispatcher("/edit.jsp").forward(request, response);
+		} else if ("delete".equals(action)) {
+			dao.delete(Integer.parseInt(id));
+			response.sendRedirect("list");
+		} else {
+			Smiley smiley = dao.read(Integer.parseInt(id));
+			if (smiley == null) {
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			request.setAttribute("smiley", smiley);
+			String path = "edit".equals(action) ? "/edit.jsp" : "/view.jsp";
+			request.getRequestDispatcher(path).forward(request, response);
 		}
-		request.setAttribute("smiley", smiley);
-		String path = "edit".equals(action) ? "/edit.jsp" : "/view.jsp";
-		request.getRequestDispatcher(path).forward(request, response);
 	}
 
 	@Override
@@ -44,8 +51,12 @@ public class SmileyServlet extends HttpServlet {
 		smiley.setFace(request.getParameter("face"));
 		smiley.setShortcut(request.getParameter("shortcut"));
 		smiley.setDescription(request.getParameter("description"));
-		smiley.setId(Integer.parseInt(id));
-		dao.update(smiley);
+		if (id != null && !"".equals(id)) {
+			smiley.setId(Integer.parseInt(id));
+			dao.update(smiley);
+		} else {
+			dao.create(smiley);
+		}
 		response.sendRedirect("list");
 	}
 }
