@@ -24,6 +24,6 @@
 </table>
 <a href="smiley?act=new">Create new smiley</a>
 <p/>
-<a href='hello'>Go to welcome page</a><br/>
+<a href='index.html'>Go to welcome page</a><br/>
 </body>
 </html>
