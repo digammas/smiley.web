@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+#smiley-panel label {
+	width: 10em;
+	display: inline-block;
+}
+
+#smiley-panel input {
+	width: 10em;
+	display: inline-block;
+}
