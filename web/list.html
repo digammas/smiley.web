@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Smileys List</title>
+</head>
+<body>
+<a href='index.html'>Go to welcome page</a><br/>
+<table id="smiley-table">
+	<tr>
+		<th>Smiley</th>
+		<th>Shortcut</th>
+		<th>Actions</th>
+	</tr>
+</table>
+<a href="#" onclick="add();">Create new smiley</a>
+<div id="smiley-panel">
+</div>
+
+<template id="show-row">
+	<tr class="smiley-row">
+		<td class="smiley-face">${smiley.face}</td>
+		<td class="smiley-shortcut">${smiley.shortcut}</td>
+		<td class="smiley-actions">
+			<a href="#" onclick="view(this);">view</a> |
+			<a href="#" onclick="edit(this)">edit</a> |
+			<a href="#" onclick="drop(this);">delete</a>
+		</td>
+	</tr>
+</template>
+
+<template id="view-panel">
+	<div>
+		<h2 >View Smiley</h2>
+		<p>
+			<label>Icon: </label><input readonly class="smiley-face" /> <br/>
+			<label>Shortcut: </label><input readonly class="smiley-shortcut" /> <br/>
+			<label>Description: </label><input readonly class="smiley-description" /><br/>
+		</p>
+		<input type="hidden" class="smiley-action" />
+		<button onclick="reset();">OK</button>
+	</div>
+</template>
+
+<template id="edit-panel">
+	<div>
+		<h2 >Edit Smiley</h2>
+		<p>
+			<label>Icon: </label><input class="smiley-face" /> <br/>
+			<label>Shortcut: </label><input class="smiley-shortcut" /> <br/>
+			<label>Description: </label><input class="smiley-description" /> <br/>
+		</p>
+		<button onclick="send(this);" class="smiley-action">Send</button>
+		<button onclick="reset();">Cancel</button>
+	</div>
+</template>
+
+<script>
+var panel = document.querySelector("#smiley-panel");
+
+function reload() {
+	reset();
+	let table = document.querySelector("#smiley-table");
+	for(let tr = null; tr = table.querySelector("tr.smiley-row");) table.removeChild(tr);
+	let template = document.querySelector("#show-row");
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET", "rest/smiley");
+	xhr.onload = function(data) {
+		let list = JSON.parse(data.target.responseText);
+		for (let smiley of list) {
+			let tr = template.content.querySelector("tr").cloneNode(true);
+			tr.id = `row-${smiley.id}`;
+			tr.querySelector(".smiley-face").innerHTML = smiley.face;
+			tr.querySelector(".smiley-shortcut").innerHTML = smiley.shortcut;
+			tr.querySelector(".smiley-actions").dataset.id = smiley.id;
+			table.appendChild(tr);
+		}
+	}
+	xhr.send();
+}
+
+function fetchAndPopulate(el, name) {
+	let id = el.parentElement.dataset.id;
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET", `rest/smiley/${id}`);
+	xhr.onload = function(data) {
+		let smiley = JSON.parse(data.target.responseText);
+		populateFromTemplate(name, smiley);
+	}
+	xhr.send();
+}
+
+function populateFromTemplate(name, smiley) {
+	let template = document.querySelector(name);
+	let div = template.content.querySelector("div").cloneNode(true);
+	div.querySelector(".smiley-face").value = smiley.face;
+	div.querySelector(".smiley-shortcut").value = smiley.shortcut;
+	div.querySelector(".smiley-description").value = smiley.description;
+	if (smiley.id != null) {
+		div.querySelector(".smiley-action").dataset.id = smiley.id;
+	}
+	reset();
+	panel.appendChild(div);
+}
+
+function view(element) {
+	fetchAndPopulate(element, "#view-panel");
+}
+
+function edit(element) {
+	fetchAndPopulate(element, "#edit-panel");
+}
+
+function add() {
+	populateFromTemplate("#edit-panel", {
+		face: "",
+		shortcut: "",
+		description: ""
+	});
+}
+
+function drop(element) {
+	let id = element.parentElement.dataset.id;
+	if (window.confirm("Are you sure you want to delete smiley?")) {
+		let xhr = new XMLHttpRequest();
+		xhr.open("DELETE", `rest/smiley/${id}`);
+		xhr.onload = reload;
+		xhr.send();
+	}
+}
+
+function send(element) {
+	let id = element.dataset.id;
+	let xhr = new XMLHttpRequest();
+	let div = element.parentElement;
+	let smiley = {
+		"face": div.querySelector(".smiley-face").value,
+		"shortcut": div.querySelector(".smiley-shortcut").value,
+		"description": div.querySelector(".smiley-description").value
+	}
+	if (id != null) {
+		xhr.open("PUT", `rest/smiley/${id}`);
+	} else {
+		xhr.open("POST", "rest/smiley");
+	}
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.onload = reload;
+	xhr.send(JSON.stringify(smiley));
+}
+
+function reset() {
+	while (panel.firstChild != null) panel.removeChild(panel.firstChild);
+}
+
+reload();
+</script>
+</body>
+</html>
